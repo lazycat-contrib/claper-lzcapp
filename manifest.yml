@@ -1,0 +1,49 @@
+lzc-sdk-version: "0.1"
+name: Claper
+package: czyt.app.claper
+version: 2.3.1
+description: The ultimate tool to interact with your audience.
+homepage: https://github.com/ClaperCo/Claper
+author: ClaperCo
+application:
+  subdomain: claper
+  oidc_redirect_path: /users/oidc/callback
+  background_task: true
+  public_path:
+    - /
+  routes:
+    - /=http://claper-app:4000/
+services:
+  claper-db:
+    image: docker.1ms.run/postgres:15
+    environment:
+      - POSTGRES_PASSWORD=claper
+      - POSTGRES_USER=claper
+      - POSTGRES_DB=claper
+    binds:
+      - /lzcapp/var/data:/var/lib/postgresql/data
+    health_check:
+      test:
+        - CMD-SHELL
+        - pg_isready -q -d claper -U claper
+  claper-app:
+    image: registry.lazycat.cloud/czyt/claperco/claper:a7b230e30f6fac9f
+    environment:
+      - BASE_URL=https://${LAZYCAT_APP_DOMAIN}
+      - DATABASE_URL=postgres://claper:claper@claper-db:5432/claper
+      - SECRET_KEY_BASE=XQRhJgvP/jI4gH6oBowJsXrHIEGCtklIhnhc9qNd3UNkdfAr5M5YCLRDn204oqJQ
+      - PRESENTATION_STORAGE=local
+      - PRESENTATION_STORAGE_DIR=/app/uploads
+      - MAIL_TRANSPORT=local
+      - MAIL_FROM=noreply@claper.co
+      - MAIL_FROM_NAME=lazycat
+
+    depends_on:
+      - claper-db
+    binds:
+      - /lzcapp/var/uploads:/app/uploads
+    health_check:
+      test:
+        - CMD-SHELL
+        - curl --fail http://localhost:4000 || exit 1
+      start_period: 20s
