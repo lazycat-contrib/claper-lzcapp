@@ -1,0 +1,14 @@
+package: czyt.app.claper
+version: 2.3.1
+name: Claper
+description: "The ultimate tool to interact with your audience."
+min_os_version: "1.5.0"
+homepage: https://github.com/ClaperCo/Claper
+author: ClaperCo
+locales:
+  zh:
+    description: "与观众实时互动的终极工具，支持现场演示、投票与问答"
+    name: Claper
+  en:
+    description: "The ultimate tool to interact with your audience."
+    name: Claper
