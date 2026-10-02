@@ -1,5 +1,5 @@
 package: czyt.app.claper
-version: 3.0.0
+version: 3.1.0
 name: Claper
 description: "The ultimate tool to interact with your audience."
 min_os_version: "1.5.0"
