@@ -22,8 +22,8 @@ services:
         - CMD-SHELL
         - pg_isready -q -d claper -U claper
   claper-app:
-    # upstream: ghcr.io/claperco/claper:3.1.1
-    image: ghcr.1ms.run/claperco/claper:3.1.1
+    # upstream: ghcr.io/claperco/claper:3.1.2
+    image: ghcr.1ms.run/claperco/claper:3.1.2
     environment:
       - BASE_URL=https://{{.S.AppDomain}}
       - DATABASE_URL=postgres://claper:{{ stable_secret "db_password" }}@claper-db:5432/claper
